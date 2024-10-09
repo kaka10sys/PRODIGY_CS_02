@@ -1,0 +1,7 @@
+Here's how the program works:
+
+The encrypt_image function takes an image and an operation as input, applies the operation to each pixel, and returns the encrypted image.
+The decrypt_image function takes an image and an operation as input, applies the inverse of the operation to each pixel, and returns the decrypted image.
+The main function provides a simple menu-driven interface for the user to choose between encrypting an image, decrypting an image, or quitting the program.
+When the user chooses to encrypt or decrypt an image, they are prompted to enter the path to the image and the operation to apply. The program then calls the encrypt_image or decrypt_image function with the appropriate arguments and saves the resulting encrypted or decrypted image.
+You can save this code to a file (e.g., image_encryption.py) and run it from the command line using python image_encryption.py.

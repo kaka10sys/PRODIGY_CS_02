@@ -1,0 +1,84 @@
+# Image Encryption Tool
+
+import numpy as np
+from PIL import Image
+
+def encrypt_image(image, operation):
+    """
+    Encrypts an image by applying a pixel manipulation operation.
+
+    Args:
+        image (PIL Image): The image to encrypt.
+        operation (str): The operation to apply to each pixel.
+            'swap' swaps the red and blue values of each pixel.
+            'add' adds 10 to each pixel value.
+            'subtract' subtracts 10 from each pixel value.
+
+    Returns:
+        PIL Image: The encrypted image.
+    """
+    pixels = np.array(image)
+    if operation == 'swap':
+        pixels[:, :, 0], pixels[:, :, 2] = pixels[:, :, 2], pixels[:, :, 0]
+    elif operation == 'add':
+        pixels = np.clip(pixels + 10, 0, 255)
+    elif operation == 'subtract':
+        pixels = np.clip(pixels - 10, 0, 255)
+    return Image.fromarray(pixels)
+
+def decrypt_image(image, operation):
+    """
+    Decrypts an image by applying the inverse of the encryption operation.
+
+    Args:
+        image (PIL Image): The image to decrypt.
+        operation (str): The operation to apply to each pixel.
+            'swap' swaps the red and blue values of each pixel.
+            'add' subtracts 10 from each pixel value.
+            'subtract' adds 10 to each pixel value.
+
+    Returns:
+        PIL Image: The decrypted image.
+    """
+    pixels = np.array(image)
+    if operation == 'swap':
+        pixels[:, :, 0], pixels[:, :, 2] = pixels[:, :, 2], pixels[:, :, 0]
+    elif operation == 'add':
+        pixels = np.clip(pixels - 10, 0, 255)
+    elif operation == 'subtract':
+        pixels = np.clip(pixels + 10, 0, 255)
+    return Image.fromarray(pixels)
+
+def main():
+    print("Image Encryption Tool")
+    print("---------------------")
+
+    while True:
+        print("Options:")
+        print("1. Encrypt an image")
+        print("2. Decrypt an image")
+        print("3. Quit")
+
+        choice = input("Enter your choice: ")
+
+        if choice == '1':
+            image_path = input("Enter the path to the image to encrypt: ")
+            operation = input("Enter the operation to apply (swap, add, subtract): ")
+            image = Image.open(image_path)
+            encrypted_image = encrypt_image(image, operation)
+            encrypted_image.save("encrypted_image.png")
+            print("Encrypted image saved as encrypted_image.png")
+        elif choice == '2':
+            image_path = input("Enter the path to the image to decrypt: ")
+            operation = input("Enter the operation to apply (swap, add, subtract): ")
+            image = Image.open(image_path)
+            decrypted_image = decrypt_image(image, operation)
+            decrypted_image.save("decrypted_image.png")
+            print("Decrypted image saved as decrypted_image.png")
+        elif choice == '3':
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
